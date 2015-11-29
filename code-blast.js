@@ -143,9 +143,6 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		requestAnimationFrame(loop);
 	}
 
-	initCanvas();
-	loop();
-
 	CodeMirror.defineOption("blastCode", false, function(cm, val, old) {
 		if (val) {
 			cm.state.blastCode = val;
