@@ -4,9 +4,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
  */
 
 ;(function () {
-	var updateTimer,
-		updateDelay = 100,
-		shakeTime = 0,
+	var shakeTime = 0,
 		shakeTimeMax = 0,
 		shakeIntensity = 3,
 		lastTime = 0,
