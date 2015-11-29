@@ -112,7 +112,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		var wait = false;
 		return function () {
 			if (!wait) {
-				callback.call();
+				callback.apply(this, arguments);
 				wait = true;
 				setTimeout(function () {
 					wait = false;
