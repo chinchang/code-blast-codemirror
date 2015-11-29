@@ -4,6 +4,8 @@ This is a quick Codemirror port of [lovely experiement by Joel Besada](https://t
 
 Simply put `code-blast.js` in your project and set the `blastCode` option to true when initializing codemirror.
 
+[Live Demo](https://rawgit.com/chinchang/code-blast-codemirror/master/demo/index.html)
+
 ```
 var cm = CodeCodeMirror(document.body, {
 	blastCode: true,
