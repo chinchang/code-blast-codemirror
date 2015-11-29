@@ -6,7 +6,7 @@ Simply put `code-blast.js` in your project and set the `blastCode` option to tru
 
 [Live Demo](https://rawgit.com/chinchang/code-blast-codemirror/master/demo/index.html)
 
-![Demo](demo.gif)
+![Demo](/demo.gif)
 
 ```
 var cm = CodeCodeMirror(document.body, {
