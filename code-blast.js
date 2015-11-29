@@ -6,13 +6,13 @@ https://twitter.com/JoelBesada/status/670343885655293952
 ;(function () {
 	var shakeTime = 0,
 		shakeTimeMax = 0,
-		shakeIntensity = 3,
+		shakeIntensity = 5,
 		lastTime = 0,
 		particles = [],
 		particlePointer = 0,
 		MAX_PARTICLES = 500,
-		PARTICLE_NUM_RANGE = { min: 5, max: 12 },
-		PARTICLE_GRAVITY = 0.07,
+		PARTICLE_NUM_RANGE = { min: 5, max: 22 },
+		PARTICLE_GRAVITY = 0.08,
 		PARTICLE_ALPHA_FADEOUT = 0.96,
 		PARTICLE_VELOCITY_RANGE = {
 			x: [-1, 1],
@@ -74,6 +74,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 			y: y + 10,
 			alpha: 1,
 			color: color,
+			size: random(1, 3),
 			velocity: {
 				x: PARTICLE_VELOCITY_RANGE.x[0] + Math.random() *
 					(PARTICLE_VELOCITY_RANGE.x[1] - PARTICLE_VELOCITY_RANGE.x[0]),
@@ -95,7 +96,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 			particle.alpha *= PARTICLE_ALPHA_FADEOUT;
 
 			ctx.fillStyle = 'rgba('+ particle.color[0] +','+ particle.color[1] +','+ particle.color[2] + ',' + particle.alpha + ')';
-			ctx.fillRect(Math.round(particle.x - 1), Math.round(particle.y - 1), 3, 3);
+			ctx.fillRect(Math.round(particle.x - 1), Math.round(particle.y - 1), particle.size, particle.size);
 		}
 	}
 
