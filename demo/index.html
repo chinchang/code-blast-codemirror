@@ -63,6 +63,11 @@
 			autoCloseTags: true,
 			blastCode: { effect: 2 },
 		});
+		cm.on("change", function (instance, change) {
+				if (window.ev) { return; }
+				window.ev = 1;
+				window._gaq && _gaq.push(['_trackEvent', 'code-blast', 'used']);
+		});
 	    </script>
 
 	    <script>var _gaq = _gaq || [];
