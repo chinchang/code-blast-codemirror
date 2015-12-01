@@ -179,7 +179,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		if (val) {
 			cm = c;
 			cm.state.blastCode = true;
-			effect = val.effect;
+			effect = val.effect || 2;
 			cmNode = cm.getWrapperElement();
 			initCanvas();
 			loop();
