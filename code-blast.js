@@ -63,7 +63,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		type = cm.getTokenAt(cursorPos);
 		if (type) { type = type.type; };
 		var numParticles = random(PARTICLE_NUM_RANGE.min, PARTICLE_NUM_RANGE.max);
-		color = getRGBComponents(node);
+		var color = getRGBComponents(node);
 		for (var i = numParticles; i--;) {
 			particles[particlePointer] = createParticle(pos.left + 10, pos.top, color);
 			particlePointer = (particlePointer + 1) % MAX_PARTICLES;
