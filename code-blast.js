@@ -23,6 +23,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		effect;
 
 	var cmNode;
+	var cm;
 	var ctx;
 	var throttledShake = throttle(shake, 100);
 	var throttledSpawnParticles = throttle(spawnParticles, 100);
@@ -174,11 +175,11 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		requestAnimationFrame(loop);
 	}
 
-	CodeMirror.defineOption("blastCode", false, function(cm, val, old) {
+	CodeMirror.defineOption("blastCode", false, function(c, val, old) {
 		if (val) {
+			cm = c;
 			cm.state.blastCode = true;
-			effect = val.effect;
-			cm = cm;
+			effect = val.effect || 2;
 			cmNode = cm.getWrapperElement();
 			initCanvas();
 			loop();
