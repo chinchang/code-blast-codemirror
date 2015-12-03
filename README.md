@@ -8,8 +8,8 @@ Simply put `code-blast.js` in your project and set the `blastCode` option to tru
 
 ![Demo](/demo.gif)
 
-```
-var cm = CodeCodeMirror(document.body, {
+```js
+var cm = CodeMirror(document.body, {
 	blastCode: { effect: 1}, // `effect` can be 1 or 2
 }
 ```
