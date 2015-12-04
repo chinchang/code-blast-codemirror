@@ -20,28 +20,13 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		},
 		w = window.innerWidth,
 		h = window.innerHeight,
-		effect;
+		effect,
+		isActive = false;
 
-	var cmNode;
-	var cm;
-	var ctx;
+	var cm, cmNode;
+	var canvas, ctx;
 	var throttledShake = throttle(shake, 100);
 	var throttledSpawnParticles = throttle(spawnParticles, 100);
-
-	function initCanvas() {
-		var canvas = document.createElement('canvas');
-		ctx = canvas.getContext('2d'),
-
-		canvas.style.position = 'absolute';
-		canvas.style.top = 0;
-		canvas.style.left = 0;
-		canvas.style.zIndex = 1;
-		canvas.style.pointerEvents = 'none';
-		canvas.width = w;
-		canvas.height = h;
-
-		document.body.appendChild(canvas);
-	}
 
 	function getRGBComponents(node) {
 		var color = getComputedStyle(node).color;
@@ -156,6 +141,8 @@ https://twitter.com/JoelBesada/status/670343885655293952
 	}
 
 	function loop() {
+		if (!isActive) { return; }
+
 		ctx.clearRect(0, 0, w, h);
 
 		// get the time past the previous frame
@@ -175,18 +162,50 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		requestAnimationFrame(loop);
 	}
 
+	function onCodeMirrorChange() {
+		throttledShake(0.3);
+		throttledSpawnParticles();
+	}
+
+
+	function init() {
+		canvas = document.createElement('canvas');
+		ctx = canvas.getContext('2d'),
+
+		canvas.id = 'code-blast-canvas'
+		canvas.style.position = 'absolute';
+		canvas.style.top = 0;
+		canvas.style.left = 0;
+		canvas.style.zIndex = 1;
+		canvas.style.pointerEvents = 'none';
+		canvas.width = w;
+		canvas.height = h;
+
+		document.body.appendChild(canvas);
+
+		isActive = true;
+		loop();
+
+		cm.on("change", onCodeMirrorChange);
+	}
+
+	function destroy() {
+		isActive = false;
+		cm.off('change', onCodeMirrorChange);
+		if (canvas) { canvas.remove(); }
+	}
+
+
 	CodeMirror.defineOption("blastCode", false, function(c, val, old) {
 		if (val) {
 			cm = c;
 			cm.state.blastCode = true;
 			effect = val.effect || 2;
 			cmNode = cm.getWrapperElement();
-			initCanvas();
-			loop();
-			cm.on("change", function (instance, change) {
-				throttledShake(0.3);
-				throttledSpawnParticles();
-			});
+			init();
+		} else {
+			destroy();
 		}
+
 	});
 })();
