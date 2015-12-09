@@ -204,7 +204,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 			cmNode = cm.getWrapperElement();
 			init();
 		} else {
-			destroy();
+			if(cm) destroy();
 		}
 
 	});
