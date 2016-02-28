@@ -147,7 +147,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 
 		// get the time past the previous frame
 		var current_time = new Date().getTime();
-		if(!lastTime) last_time = current_time;
+		if(!lastTime) lastTime = current_time;
 		var dt = (current_time - lastTime) / 1000;
 		lastTime = current_time;
 
@@ -197,8 +197,8 @@ https://twitter.com/JoelBesada/status/670343885655293952
 
 
 	CodeMirror.defineOption("blastCode", false, function(c, val, old) {
+		cm = c;
 		if (val) {
-			cm = c;
 			cm.state.blastCode = true;
 			effect = val.effect || 2;
 			cmNode = cm.getWrapperElement();
