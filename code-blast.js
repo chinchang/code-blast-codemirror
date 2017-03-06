@@ -23,7 +23,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		effect,
 		isActive = false;
 
-	var cm, cmNode;
+	var codemirrors = [], cmNode;
 	var canvas, ctx;
 	var throttledShake = throttle(shake, 100);
 	var throttledSpawnParticles = throttle(spawnParticles, 100);
@@ -41,7 +41,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		}
 	}
 
-	function spawnParticles(type) {
+	function spawnParticles(cm, type) {
 		var cursorPos = cm.getCursor();
 		var pos = cm.cursorCoords();
 		var node = document.elementFromPoint(pos.left - 5, pos.top + 5);
@@ -118,7 +118,8 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		}
 	}
 
-	function shake(time) {
+	function shake(editor, time) {
+		cmNode = editor.getWrapperElement();
 		shakeTime = shakeTimeMax = time;
 	}
 
@@ -162,49 +163,56 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		requestAnimationFrame(loop);
 	}
 
-	function onCodeMirrorChange() {
-		throttledShake(0.3);
-		throttledSpawnParticles();
+	function onCodeMirrorChange(editor) {
+		if (editor.getOption('blastCode') === true || editor.getOption('blastCode').shake === undefined) {
+			throttledShake(editor, 0.3);
+		}
+		throttledSpawnParticles(editor);
 	}
 
 
-	function init() {
-		canvas = document.createElement('canvas');
-		ctx = canvas.getContext('2d'),
-
-		canvas.id = 'code-blast-canvas'
-		canvas.style.position = 'absolute';
-		canvas.style.top = 0;
-		canvas.style.left = 0;
-		canvas.style.zIndex = 1;
-		canvas.style.pointerEvents = 'none';
-		canvas.width = w;
-		canvas.height = h;
-
-		document.body.appendChild(canvas);
-
+	function init(editor) {
 		isActive = true;
-		loop();
 
-		cm.on("change", onCodeMirrorChange);
+		if (!canvas) {
+			canvas = document.createElement('canvas');
+			ctx = canvas.getContext('2d'),
+
+			canvas.id = 'code-blast-canvas'
+			canvas.style.position = 'absolute';
+			canvas.style.top = 0;
+			canvas.style.left = 0;
+			canvas.style.zIndex = 1;
+			canvas.style.pointerEvents = 'none';
+			canvas.width = w;
+			canvas.height = h;
+
+			document.body.appendChild(canvas);
+			loop();
+		}
+
+		editor.on("change", onCodeMirrorChange);
 	}
 
-	function destroy() {
-		isActive = false;
-		cm.off('change', onCodeMirrorChange);
-		if (canvas) { canvas.remove(); }
+	function destroy(editor) {
+		editor.off('change', onCodeMirrorChange);
+		codemirrors.splice(codemirrors.indexOf(editor), 1);
+		if (!codemirrors.length) {
+			isActive = false;
+			if (canvas) {
+				canvas.remove();
+				canvas = null;
+			}
+		}
 	}
 
-
-	CodeMirror.defineOption("blastCode", false, function(c, val, old) {
-		cm = c;
+	CodeMirror.defineOption('blastCode', false, function(editor, val, old) {
 		if (val) {
-			cm.state.blastCode = true;
+			codemirrors.push(editor);
 			effect = val.effect || 2;
-			cmNode = cm.getWrapperElement();
-			init();
+			init(editor);
 		} else {
-			destroy();
+			destroy(editor);
 		}
 
 	});
