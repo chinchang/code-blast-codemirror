@@ -212,11 +212,11 @@ https://twitter.com/JoelBesada/status/670343885655293952
 			codemirrors.push(editor);
 			effect = val.effect || 2;
 			
-			if(val.shakeIntensity) {
+			if(val.shakeIntensity !== undefined) {
 				shakeIntensity = val.shakeIntensity;
 			}
 			
-			if(val.maxParticleSize) {
+			if(val.maxParticleSize !== undefined) {
 				maxParticleSize = val.maxParticleSize;
 			}
 			
