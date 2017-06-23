@@ -10,7 +10,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 		lastTime = 0,
 		particles = [],
 		particlePointer = 0,
-		maxParticleSize = 8,
+		maxParticleSize = 0,
 		MAX_PARTICLES = 500,
 		PARTICLE_NUM_RANGE = { min: 5, max: 10 },
 		PARTICLE_GRAVITY = 0.08,
@@ -64,13 +64,13 @@ https://twitter.com/JoelBesada/status/670343885655293952
 			color: color
 		};
 		if (effect === 1) {
-			p.size = random(2, 4);
+			p.size = random(2, maxParticleSize || 4);
 			p.vx = PARTICLE_VELOCITY_RANGE.x[0] + Math.random() *
 					(PARTICLE_VELOCITY_RANGE.x[1] - PARTICLE_VELOCITY_RANGE.x[0]);
 			p.vy = PARTICLE_VELOCITY_RANGE.y[0] + Math.random() *
 					(PARTICLE_VELOCITY_RANGE.y[1] - PARTICLE_VELOCITY_RANGE.y[0]);
 		} else if (effect === 2) {
-			p.size = random(2, maxParticleSize);
+			p.size = random(2, maxParticleSize || 8);
 			p.drag = 0.92;
 			p.vx = random(-3, 3);
 			p.vy = random(-3, 3);
