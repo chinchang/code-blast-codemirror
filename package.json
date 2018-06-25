@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/chinchang/code-blast-codemirror.git"
   },
-  "keywords": [],
+  "keywords": ['codemirror','blast','particle','fun'],
   "author": "",
   "license": "MIT",
   "bugs": {
